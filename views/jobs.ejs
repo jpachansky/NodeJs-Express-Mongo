@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Jobs</title>
+</head>
+<body>
+    <% include header.ejs %>
+    <h2>My Jobs:</h2>
+
+    <% if (jobs.length ===0 ) {%>
+        No jobs...
+    <% } %>
+
+    <ul class="jobs">
+    <% for(var i=0; i<jobs.length; i++) {%>
+        <li class="job">
+        <a href="/jobs/<%= jobs[i]._id %>"><%= jobs[i].name %></a>
+        </li>
+    <% } %>
+    </ul>
+</body>
+</html>
