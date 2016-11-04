@@ -10,13 +10,12 @@ module.exports = {
 
     // LIST ALL JOBS    
     getAll: function (req, res) {
-        modelJob.getAll(function (err, allJobs) {            
-            if (err) {
-                logger.log("error", err.message);
-                res.render(path + 'error.ejs', { error: err.message })
-            } else {
-                res.render(path + 'jobs.ejs', { jobs: allJobs });
-            }
+        modelJob.getAll()
+        .then(function (results) {            
+            res.render(path + 'jobs.ejs', { jobs: results });
+        })
+        .catch(function(e) {
+            res.render(path + 'error.ejs', { error: e.message })
         });
     },
 
@@ -27,13 +26,12 @@ module.exports = {
 
     // GET EXISTING JOB    
     getJob: function (req, res) {
-        modelJob.get(req.params.id, function (err, createRes) {
-            if (err) {
-                logger.log("error", err.message);
-                res.render(path + 'error.ejs', { error: err.message })
-            } else {
-                res.render(path + 'job.ejs', { job: createRes, result: '' })
-            }
+        modelJob.get(req.params.id)
+        .then(function (results) {            
+            res.render(path + 'job.ejs', { job: results, result: '' });
+        })
+        .catch(function(e) {
+            res.render(path + 'error.ejs', { error:e.message })
         });
     },
 
@@ -44,15 +42,21 @@ module.exports = {
 
         if (!req.body.inpJobId) {   
             var job = {name: req.body.inpName, description: req.body.inpDescription};        
-            modelJob.create(job, function (err, createRes) {     
-                error = err;
-                result = createRes;
+            modelJob.create(job)
+            .then(function (results) {            
+                result = results;
+            })
+            .catch(function(e) {
+                error = e;
             });
         } else {
             var job = {_id: req.body.inpJobId, name: req.body.inpName, description: req.body.inpDescription};
-            modelJob.update(job, function (err, updateRes) {
-                error = err;
-                result = updateRes;
+            modelJob.update(job)
+            .then(function (results) {            
+                result = results;
+            })
+            .catch(function(e) {
+                error = e;
             });
         }
 

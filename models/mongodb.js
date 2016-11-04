@@ -2,17 +2,19 @@ const config = require('../config');
 const MongoClient = require('mongodb').MongoClient;
 
 var db = null;
-var connect = function(callback) {
-    if (db) {
-        return callback(db);
-    }
+var connect = function() {
+    return new Promise(function (fulfill, reject){
+        if (db) {
+            return fulfill(db);
+        }
 
-    MongoClient.connect(config.mongodb.url, (err, database) => {
-        if (err) 
-            return console.log(err);
+        MongoClient.connect(config.mongodb.url, (err, database) => {
+            if (err) 
+                return reject(err);
 
-        db = database;
-        return callback(db);   
+            db = database;
+            fulfill(db);   
+        });
     });
 };
 
