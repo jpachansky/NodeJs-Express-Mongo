@@ -1,6 +1,7 @@
-const express = require('express')
+import express from 'express';
+import controllerJob from '../controllers/jobs';
+
 const router = express.Router();
-const controllerJob = require('../controllers/jobs');
 
 // LIST ALL JOBS
 router.get("/", controllerJob.getAll);

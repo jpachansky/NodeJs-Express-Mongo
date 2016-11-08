@@ -1,8 +1,8 @@
-const config = require('../config');
-const MongoClient = require('mongodb').MongoClient;
+import config from '../config';
+import { MongoClient } from 'mongodb';
 
-var db = null;
-var connect = function() {
+let db = null;
+let connect = function() {
     return new Promise(function (fulfill, reject){
         if (db) {
             return fulfill(db);

@@ -1,5 +1,5 @@
-const connect = require('./mongodb');
-const mongo = require('mongodb');
+import connect from "./mongodb";
+import mongo from 'mongodb';
 
 module.exports =  { 
     

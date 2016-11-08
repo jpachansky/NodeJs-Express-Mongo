@@ -1,5 +1,5 @@
 module.exports = (function (env) {
-    var config = {};
+    let config = {};
     switch (env) {
         case 'production':
             config = require('./production');

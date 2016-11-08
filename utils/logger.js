@@ -1,7 +1,8 @@
-const winston = require("winston");
-const config = require("../config");
+import winston from 'winston';
+import config from '../config';
+import path from 'path';
 
-var appDir = require('path').dirname(require.main.filename);
+const appDir = path.dirname(require.main.filename);
 
 const logger = new (winston.Logger)({
     level: 'verbose',

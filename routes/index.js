@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+
 const router = express.Router();
-const bodyParser = require('body-parser')
-const appDir = require('path').dirname(require.main.filename);
-const path = appDir + '/views/';
+const viewsDir = path.dirname(require.main.filename) + '/views/';
 
 router.use(function (req, res, next) {
   console.log("/" + req.method);
@@ -15,12 +16,12 @@ router.use('/jobs', require('./jobs'));
 
 // HOME
 router.get("/", function (req, res) {
-  res.render(path + "index.ejs", { environment: process.env.NODE_ENV, username: req.connection.user });
+  res.render(viewsDir + "index.ejs", { environment: process.env.NODE_ENV, username: req.connection.user });
 });
 
 // 404
 router.get("*", function (req, res) {
-  res.render(path + "404.ejs");
+  res.render(viewsDir + "404.ejs");
 });
 
 module.exports = router;

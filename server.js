@@ -1,14 +1,14 @@
-const express = require("express");
-const app = express();
-const routes = require("./routes");
-const config = require("./config");
-const logger = require("./utils/logger");
+import express from 'express';
+import routes from './routes';
+import config from './config';
+import logger from './utils/logger';
+import nodeSSPI from 'node-sspi';
 
+const app = express();
 app.set('view engine', 'ejs');
 
 // Authenticate request
 app.use(function (req, res, next) {
-  var nodeSSPI = require('node-sspi');
   var nodeSSPIObj = new nodeSSPI({
     retrieveGroups: true
   });
@@ -19,12 +19,12 @@ app.use(function (req, res, next) {
 
 // Authorise user
 app.use(function (req, res, next) {
-  if (req.connection.userGroups.indexOf("RUFFER\\Developers") > -1) {
+  if (req.connection.userGroups.indexOf("MyDomain\\MyUserGroup") > -1) {  // Use your own user group
     logger.log("debug", req.connection.user + " is authenticated");
   }
   else{
     logger.log("debug", req.connection.user + " is NOT authenticated");
-    res.send("You are not authorised to access this page.");
+    //res.send("You are not authorised to access this page.");
   }
   next();
 });
